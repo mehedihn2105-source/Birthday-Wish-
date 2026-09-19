@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Love! ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0d0c1d, #2a0845, #12002b);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        /* Stars background */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Glassmorphism Card Container */
+        .card {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 28px;
+            padding: 35px 25px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 105, 180, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Surprise Box Screen */
+        .start-screen {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .start-screen:hover {
+            transform: scale(1.05);
+        }
+
+        .heart-btn {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(45deg, #ff2a6d, #ff5e62);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            box-shadow: 0 0 25px #ff2a6d;
+            animation: pulse 1.5s infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 42, 109, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(255, 42, 109, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 42, 109, 0); }
+        }
+
+        /* Main Content */
+        .main-content {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Floating Balloons */
+        .balloon-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 40px;
+            height: 50px;
+            background: rgba(255, 105, 180, 0.7);
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            animation: floatUp 8s infinite ease-in;
+        }
+
+        .balloon::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 19px;
+            width: 2px;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+        }
+
+        /* Title */
+        .title {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff758c, #ff7eb3, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        /* Message Box */
+        .message-box {
+            min-height: 110px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #f3e5f5;
+            margin: 15px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Photo Frame */
+        .photo-frame {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 4px solid #ff758c;
+            box-shadow: 0 0 20px rgba(255, 117, 140, 0.6);
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Music Button */
+        .music-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars" id="stars"></div>
+    <div class="balloon-container" id="balloons"></div>
+    <canvas id="heartCanvas"></canvas>
+
+    <div class="card">
+        <div class="start-screen" id="startScreen">
+            <h2 style="font-size: 22px; margin-bottom: 10px; color: #ff7eb3;">A Special Surprise For You ❤️</h2>
+            <p style="font-size: 14px; opacity: 0.8;">Click the gift box to open!</p>
+            <div class="heart-btn">🎁</div>
+        </div>
+
+        <div class="main-content" id="mainContent">
+            <div class="title">Happy Birthday, My Love! 🎉</div>
+            
+            <div class="photo-frame">
+                <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=300&auto=format&fit=crop" alt="Cute Picture">
+            </div>
+
+            <div class="message-box" id="typedMessage"></div>
+
+            <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+                🎵 Play Birthday Music
+            </button>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73561.mp3?filename=happy-birthday-155461.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Stars background
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 60; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            starsContainer.appendChild(star);
+        }
+
+        // Balloons
+        const balloonContainer = document.getElementById('balloons');
+        const colors = ['#ff2a6d', '#ff5e62', '#ffb199', '#f39c12', '#9b59b6'];
+        for (let i = 0; i < 15; i++) {
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            balloon.style.left = Math.random() * 100 + '%';
+            balloon.style.animationDelay = (Math.random() * 8) + 's';
+            balloon.style.background = colors[Math.floor(Math.random() * colors.length)];
+            balloonContainer.appendChild(balloon);
+        }
+
+        // Typewriter Message
+        const messageText = "Ajker ei vishesh dine tomai janai onek onek valobasha r shubhechha! 🎂✨ Tumi amr jiboner shobcheye shundor obhadhyay. Shobshomoy amon korei hashi-khushi theko. Happy Birthday, Sunshine! ❤️";
+        let index = 0;
+
+        function typeWriter() {
+            if (index < messageText.length) {
+                document.getElementById("typedMessage").innerHTML += messageText.charAt(index);
+                index++;
+                setTimeout(typeWriter, 45);
+            }
+        }
+
+        // Click Event
+        const startScreen = document.getElementById('startScreen');
+        const mainContent = document.getElementById('mainContent');
+        const bgMusic = document.getElementById('bgMusic');
+
+        startScreen.addEventListener('click', () => {
+            startScreen.style.display = 'none';
+            mainContent.style.display = 'flex';
+            typeWriter();
+            bgMusic.play().catch(() => console.log('Autoplay blocked'));
+            startHeartsAnimation();
+        });
+
+        function toggleMusic() {
+            const musicBtn = document.getElementById('musicBtn');
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicBtn.innerHTML = '🎵 Pause Music';
+            } else {
+                bgMusic.pause();
+                musicBtn.innerHTML = '🎵 Play Birthday Music';
+            }
+        }
+
+        // Hearts Animation
+        function startHeartsAnimation() {
+            const canvas = document.getElementById('heartCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const hearts = [];
+
+            class Heart {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = canvas.height + 20;
+                    this.size = Math.random() * 15 + 10;
+                    this.speedY = Math.random() * 2 + 1;
+                    this.speedX = Math.random() * 1 - 0.5;
+                    this.opacity = Math.random() * 0.7 + 0.3;
+                }
+
+                update() {
+                    this.y -= this.speedY;
+                    this.x += this.speedX;
+                    if (this.opacity > 0.01) this.opacity -= 0.002;
+                }
+
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha =
